@@ -636,6 +636,11 @@ public:
 /*0x1238*/ eqstd::vector<bool> PhysicsEffectsUpdated;
 /*0x1258*/
 
+#if HAS_ENCOUNTER_LOCKING
+		EQLIB_OBJECT PlayerClient* GetEncounterLockOwner() const;
+		__declspec(property(get = GetEncounterLockOwner))       PlayerClient*        EncounterLockOwner;
+#endif
+
 	EQLIB_OBJECT bool LegalPlayerRace();
 
 	EQLIB_OBJECT bool LegalPlayerRace(int race)
