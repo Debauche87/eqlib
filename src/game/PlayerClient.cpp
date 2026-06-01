@@ -38,5 +38,18 @@ const char* PlayerClient::GetRaceString() const
 {
 	return pEverQuest->GetRaceDesc(GetRace());
 }
+#if HAS_ENCOUNTER_LOCKING
+PlayerClient* PlayerZoneClient::GetEncounterLockOwner() const
+{
+	if (LockID == 0)
+		return nullptr;
+
+	const PlayerManagerClient* manager = pSpawnManager.get();
+	if (manager == nullptr)
+		return nullptr;
+
+	return manager->m_hashTable.FindFirst(LockID);
+}
+#endif // HAS_ENCOUNTER_LOCKING
 
 } // namespace eqlib
