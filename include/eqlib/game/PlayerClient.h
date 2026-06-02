@@ -331,11 +331,11 @@ public:
 	// size 0x28
 	struct Node
 	{
-	/*0x00*/ uint64_t      m_hashKey;
-	/*0x08*/ PlayerClient* m_value;
-	/*0x10*/ Node*         m_hashNext;
-	/*0x18*/ Node*         m_prev;
-	/*0x20*/ Node*         m_next;
+		/*0x00*/ uint64_t      m_hashKey;
+		/*0x08*/ PlayerClient* m_value;
+		/*0x10*/ Node*         m_hashNext;
+		/*0x18*/ Node*         m_prev;
+		/*0x20*/ Node*         m_next;
 	};
 
 	virtual ~PlayerHashTable() {}
@@ -343,12 +343,26 @@ public:
 	virtual void freeNode(Node*) {}
 	virtual bool unknown() { return true; }
 
-/*0x08*/ size_t            m_count;
-/*0x10*/ Node*             m_head;
-/*0x18*/ Node*             m_tail;
-/*0x20*/ Node*             m_table[TABLE_SIZE];
-};
+	/*0x08*/ size_t            m_count;
+	/*0x10*/ Node*             m_head;
+	/*0x18*/ Node*             m_tail;
+	/*0x20*/ Node*             m_table[TABLE_SIZE];
 
+	PlayerClient* FindFirst(uint64_t key) const
+	{
+		int slot = key % TABLE_SIZE;
+		Node* entry = m_table[slot];
+		while (entry != nullptr)
+		{
+			if (entry->m_hashKey == key)
+				return entry->m_value;
+
+			entry = entry->m_hashNext;
+		}
+
+		return nullptr;
+	}
+};
 
 // size: 0x2f88
 class [[offsetcomments]] PlayerManagerBase
@@ -635,6 +649,10 @@ public:
 /*0x1220*/ ArrayClass<PhysicsEffect> mPhysicsEffects;
 /*0x1238*/ eqstd::vector<bool> PhysicsEffectsUpdated;
 /*0x1258*/
+
+
+		
+	EQLIB_OBJECT PlayerClient* GetEncounterLockOwner() const;
 
 	EQLIB_OBJECT bool LegalPlayerRace();
 
