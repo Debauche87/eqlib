@@ -331,11 +331,11 @@ public:
 	// size 0x28
 	struct Node
 	{
-		/*0x00*/ uint64_t      m_hashKey;
-		/*0x08*/ PlayerClient* m_value;
-		/*0x10*/ Node*         m_hashNext;
-		/*0x18*/ Node*         m_prev;
-		/*0x20*/ Node*         m_next;
+	/*0x00*/ uint64_t      m_hashKey;
+	/*0x08*/ PlayerClient* m_value;
+	/*0x10*/ Node*         m_hashNext;
+	/*0x18*/ Node*         m_prev;
+	/*0x20*/ Node*         m_next;
 	};
 
 	virtual ~PlayerHashTable() {}
